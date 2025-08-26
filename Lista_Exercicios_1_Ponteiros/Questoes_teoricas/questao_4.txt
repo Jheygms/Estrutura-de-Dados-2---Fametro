@@ -1,0 +1,15 @@
+4. Considere a função void modifica(int *a, int b) que altera o valor da variável para 
+a qual a aponta. Como seria a chamada correta desta função na main para 
+modificar uma variável int num = 5;?
+
+Resposta = modifica(&num, num);
+o main ficaria assim:
+int main (){
+    int num = 5;
+    modifica(&num, num);
+    printf("%d", num);
+
+    return 0;
+}
+
+pois, a chamada pode mudar o valor da variavel na main, pois, foi passado o endereco dela.

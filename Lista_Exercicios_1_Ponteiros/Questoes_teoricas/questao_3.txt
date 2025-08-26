@@ -1,0 +1,9 @@
+3. Para que serve a função malloc() da biblioteca <stdlib.h>?
+a) Para liberar memória previamente alocada.
+b) Para declarar uma variável do tipo ponteiro.
+c) Para alocar um bloco de memória de um tamanho especificado em bytes e 
+retornar um ponteiro para o início desse bloco.
+d) Para copiar o conteúdo de um bloco de memória para outro.
+
+Resposta = c) Para alocar um bloco de memória de um tamanho especificado em bytes e 
+retornar um ponteiro para o início desse bloco.
