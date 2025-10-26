@@ -316,7 +316,9 @@ int main(void) {
                 return 0;
             default:
                 printf("Opcao invalida.\n");
+            
         }
     }
     return 0;
 }
+
