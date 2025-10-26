@@ -1,24 +1,13 @@
-/*
-  agenda.c
-  Agenda telefônica usando lista encadeada simples.
-  Contatos: Nome(40), Telefone(15), Celular(15), Email(40), DataAniversario(dia,mes)
-
-  Compilar:
-    gcc -std=c11 -Wall -Wextra -o agenda agenda.c
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
-/* limites informados no enunciado */
 #define MAX_NOME 40
 #define MAX_TEL  15
 #define MAX_CEL  15
 #define MAX_EMAIL 40
 
-/* Estruturas */
 typedef struct {
     int dia;
     int mes;
@@ -32,31 +21,22 @@ typedef struct {
     Data aniversario;
 } Contato;
 
-/* Elemento da lista encadeada (conforme enunciado) */
 struct elemento {
     Contato info;
     struct elemento* prox;
 };
 typedef struct elemento Elemento;
 
-/* ---------- Funções utilitárias para leitura segura ---------- */
-
-/* lê uma linha do stdin para buffer (removendo '\n'), size inclui espaço para '\0' */
 void read_line(const char *prompt, char *buffer, size_t size) {
-    if (prompt) {
-        printf("%s", prompt);
-    }
+    if (prompt) printf("%s", prompt);
     if (fgets(buffer, (int)size, stdin) == NULL) {
-        /* em caso de EOF ou erro, colocar string vazia */
         buffer[0] = '\0';
         return;
     }
-    /* remover newline final se presente */
     size_t len = strlen(buffer);
     if (len > 0 && buffer[len - 1] == '\n') buffer[len - 1] = '\0';
 }
 
-/* lê inteiro com prompt; se erro, pede novamente */
 int read_int(const char *prompt, int min, int max) {
     char line[64];
     int val;
@@ -73,7 +53,6 @@ int read_int(const char *prompt, int min, int max) {
     }
 }
 
-/* compara strings ignorando maiúsculas/minúsculas (retorna 0 se iguais) */
 int str_case_cmp(const char *a, const char *b) {
     while (*a && *b) {
         char ca = tolower((unsigned char)*a);
@@ -84,14 +63,10 @@ int str_case_cmp(const char *a, const char *b) {
     return (unsigned char)tolower((unsigned char)*a) - (unsigned char)tolower((unsigned char)*b);
 }
 
-/* ---------- Funções pedidas pelo enunciado ---------- */
-
-/* cria_agenda — retorna ponteiro para NULL (lista vazia) */
 Elemento* cria_agenda() {
     return NULL;
 }
 
-/* insere_contato — insere no final; recebe ponteiro para ponteiro da cabeça */
 void insere_contato(Elemento **head, Contato c) {
     Elemento *novo = (Elemento*) malloc(sizeof(Elemento));
     if (!novo) {
@@ -100,7 +75,6 @@ void insere_contato(Elemento **head, Contato c) {
     }
     novo->info = c;
     novo->prox = NULL;
-
     if (*head == NULL) {
         *head = novo;
     } else {
@@ -110,7 +84,6 @@ void insere_contato(Elemento **head, Contato c) {
     }
 }
 
-/* lista_contatos — exibe todos os contatos */
 void lista_contatos(Elemento *head) {
     if (!head) {
         printf("Agenda vazia.\n");
@@ -128,7 +101,6 @@ void lista_contatos(Elemento *head) {
     }
 }
 
-/* busca_contato — busca por nome (case-insensitive), retorna ponteiro para elemento ou NULL */
 Elemento* busca_contato(Elemento *head, const char *nome) {
     for (Elemento *p = head; p != NULL; p = p->prox) {
         if (str_case_cmp(p->info.nome, nome) == 0) return p;
@@ -136,7 +108,6 @@ Elemento* busca_contato(Elemento *head, const char *nome) {
     return NULL;
 }
 
-/* remove_contato — remove contato pelo nome; atualiza head via ponteiro para ponteiro */
 void remove_contato(Elemento **head) {
     if (!*head) {
         printf("Agenda vazia. Nada a remover.\n");
@@ -148,14 +119,11 @@ void remove_contato(Elemento **head) {
         printf("Nome vazio. Operacao cancelada.\n");
         return;
     }
-
     Elemento *p = *head;
     Elemento *ant = NULL;
     while (p) {
         if (str_case_cmp(p->info.nome, nome_busca) == 0) {
-            /* encontrado */
             if (ant == NULL) {
-                /* removendo o primeiro */
                 *head = p->prox;
             } else {
                 ant->prox = p->prox;
@@ -170,7 +138,6 @@ void remove_contato(Elemento **head) {
     printf("Contato '%s' nao encontrado.\n", nome_busca);
 }
 
-/* atualiza_contato — busca por nome e solicita novos dados (se desejar manter, permite entrar em branco) */
 void atualiza_contato(Elemento *head) {
     if (!head) {
         printf("Agenda vazia.\n");
@@ -189,30 +156,19 @@ void atualiza_contato(Elemento *head) {
     }
     Contato *c = &p->info;
     char buffer[128];
-
     printf("Deixe em branco para manter o valor atual.\n");
-
-    /* Nome */
     printf("Nome atual: %s\n", c->nome);
     read_line("Novo nome: ", buffer, sizeof(buffer));
     if (buffer[0] != '\0') strncpy(c->nome, buffer, MAX_NOME), c->nome[MAX_NOME] = '\0';
-
-    /* Telefone */
     printf("Telefone atual: %s\n", c->telefone);
     read_line("Novo telefone: ", buffer, sizeof(buffer));
     if (buffer[0] != '\0') strncpy(c->telefone, buffer, MAX_TEL), c->telefone[MAX_TEL] = '\0';
-
-    /* Celular */
     printf("Celular atual: %s\n", c->celular);
     read_line("Novo celular: ", buffer, sizeof(buffer));
     if (buffer[0] != '\0') strncpy(c->celular, buffer, MAX_CEL), c->celular[MAX_CEL] = '\0';
-
-    /* Email */
     printf("Email atual: %s\n", c->email);
     read_line("Novo email: ", buffer, sizeof(buffer));
     if (buffer[0] != '\0') strncpy(c->email, buffer, MAX_EMAIL), c->email[MAX_EMAIL] = '\0';
-
-    /* Data aniversario */
     printf("Aniversario atual: %02d/%02d\n", c->aniversario.dia, c->aniversario.mes);
     read_line("Novo dia (ou enter para manter): ", buffer, sizeof(buffer));
     if (buffer[0] != '\0') {
@@ -232,11 +188,9 @@ void atualiza_contato(Elemento *head) {
             printf("Mes invalido. Mantido o valor anterior.\n");
         }
     }
-
     printf("Contato atualizado com sucesso.\n");
 }
 
-/* busca_contato_menu — função auxiliar que pergunta nome e mostra contato (para opção 3 do menu) */
 void busca_contato_menu(Elemento *head) {
     if (!head) {
         printf("Agenda vazia.\n");
@@ -262,7 +216,6 @@ void busca_contato_menu(Elemento *head) {
     printf("Aniversario: %02d/%02d\n", c->aniversario.dia, c->aniversario.mes);
 }
 
-/* remove_duplicados — remove contatos com mesmo nome (ignora case), mantendo a primeira ocorrência */
 void remove_duplicados(Elemento **head) {
     if (!*head) {
         printf("Agenda vazia.\n");
@@ -275,7 +228,6 @@ void remove_duplicados(Elemento **head) {
         Elemento *j = i->prox;
         while (j) {
             if (str_case_cmp(i->info.nome, j->info.nome) == 0) {
-                /* remover j */
                 ant->prox = j->prox;
                 Elemento *tmp = j;
                 j = j->prox;
@@ -291,7 +243,6 @@ void remove_duplicados(Elemento **head) {
     printf("Removidos %d contatos duplicados (por nome).\n", removidos);
 }
 
-/* libera toda a agenda (free) */
 void libera_agenda(Elemento **head) {
     Elemento *p = *head;
     while (p) {
@@ -302,35 +253,25 @@ void libera_agenda(Elemento **head) {
     *head = NULL;
 }
 
-/* cria_contato_por_input — ajuda para preencher um Contato pedindo dados ao usuário */
 Contato cria_contato_por_input() {
     Contato c;
     char buffer[128];
-
     read_line("Nome: ", buffer, sizeof(buffer));
     strncpy(c.nome, buffer, MAX_NOME); c.nome[MAX_NOME] = '\0';
-
     read_line("Telefone: ", buffer, sizeof(buffer));
     strncpy(c.telefone, buffer, MAX_TEL); c.telefone[MAX_TEL] = '\0';
-
     read_line("Celular: ", buffer, sizeof(buffer));
     strncpy(c.celular, buffer, MAX_CEL); c.celular[MAX_CEL] = '\0';
-
     read_line("Email: ", buffer, sizeof(buffer));
     strncpy(c.email, buffer, MAX_EMAIL); c.email[MAX_EMAIL] = '\0';
-
-    /* ler dia e mes com validação simples */
     c.aniversario.dia = read_int("Dia do aniversario (1-31): ", 1, 31);
     c.aniversario.mes = read_int("Mes do aniversario (1-12): ", 1, 12);
-
     return c;
 }
 
-/* ---------- Programa principal (menu) ---------- */
 int main(void) {
     Elemento *agenda = cria_agenda();
     int opcao;
-
     while (1) {
         printf("\n===== AGENDA TELEFONICA =====\n");
         printf("1. Inserir Contato\n");
@@ -341,7 +282,6 @@ int main(void) {
         printf("6. Remover Duplicados\n");
         printf("7. Sair\n");
         opcao = read_int("Escolha uma opcao: ", 1, 7);
-
         switch (opcao) {
             case 1: {
                 printf("-- Inserir novo contato --\n");
