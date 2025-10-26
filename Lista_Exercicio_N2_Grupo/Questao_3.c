@@ -8,6 +8,7 @@
 #include <string.h>   
 #include <ctype.h>    
 
+//Estrutura da pilha 
 typedef struct Node {
     double value;
     struct Node* next;
@@ -17,6 +18,7 @@ typedef struct Stack {
     Node* top;
 } Stack;
 
+//funções da pilha
 Stack* createStack() {
     Stack* stack = (Stack*)malloc(sizeof(Stack));
     if (stack == NULL) {
@@ -64,6 +66,7 @@ void freeStack(Stack* stack) {
     free(stack); 
 }
 
+//avaliador
 double evaluateRPN(char* expression) {
     Stack* stack = createStack();
 
@@ -132,6 +135,7 @@ double evaluateRPN(char* expression) {
     return finalResult;
 }
 
+//programa principal 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
         fprintf(stderr, "Uso: %s \"<expressao RPN>\"\n", argv[0]);
