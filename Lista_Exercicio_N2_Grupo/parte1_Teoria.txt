@@ -1,0 +1,16 @@
+1. O que significa alocação estática de memória para um conjunto de elementos?
+2. Qual a diferença entre alocação estática e alocação dinâmica?
+3. O que é um ponteiro?
+4. O que é uma estrutura de dados homogêneos?
+5. O que é uma estrutura de dados heterogêneos?
+6. Qual a vantagem das listas sobre os vetores em termos de consumo de memória? 
+Exemplifique.
+7. O que é uma lista simplesmente encadeada? Apresente um diagrama para ilustrar 
+essa estrutura de dados.
+8. O que é uma lista duplamente encadeada? Apresente um diagrama para ilustrar 
+essa estrutura de dados.
+9. O que é uma lista duplamente encadeada? Apresente um diagrama para ilustrar 
+essa estrutura de dados.
+10. Explique o funcionamento do algoritmo de busca binária e sequencial.
+11. Explique o funcionamento dos seguintes algoritmos de ordenação: Insertion sort, 
+Selection sort, Merge sort, Count sort, Quicksort.
