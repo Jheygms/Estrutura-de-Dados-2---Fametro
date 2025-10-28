@@ -1,16 +1,78 @@
 1. O que significa alocação estática de memória para um conjunto de elementos?
+Alocação estática de memória refere-se à técnica na qual a quantidade de memória necessária para uma variável ou um conjunto de elementos é fixada e reservada no tempo de compilação. Uma vez alocada, essa quantidade de memória não pode ser alterada durante a execução do programa.
+
 2. Qual a diferença entre alocação estática e alocação dinâmica?
+A diferença fundamental entre a alocação estática de memória e a alocação dinâmica de memória reside no momento em que a memória é reservada e na forma como ela é gerenciada durante a execução do programa.A alocação estática é decidida e reservada no tempo de compilação. O tamanho do espaço de memória necessário é fixo e deve ser conhecido antes que o programa comece a ser executado. Já a alocação dinâmica ocorre no tempo de execução, permitindo que o programa solicite memória conforme a necessidade real de dados. Essa memória é alocada na área chamada heap.
+
+
 3. O que é um ponteiro?
+Um ponteiro é uma variável cujo valor é o endereço de memória de outra variável. Ele não armazena o dado em si, mas sim o local onde o dado está armazenado na memória.
+
 4. O que é uma estrutura de dados homogêneos?
+Estruturas de dados homogêneos são aquelas que armazenam elementos de um único tipo de dado. O exemplo mais comum é o vetor, onde todos os elementos devem ser do mesmo tipo.
+
+
 5. O que é uma estrutura de dados heterogêneos?
+Estruturas de dados heterogêneos são aquelas que podem armazenar elementos de diferentes tipos de dados em uma única unidade. O exemplo mais comum é a estrutura, que permite agrupar variáveis de tipos distintos sob um único nome.
+
+
 6. Qual a vantagem das listas sobre os vetores em termos de consumo de memória? 
 Exemplifique.
-7. O que é uma lista simplesmente encadeada? Apresente um diagrama para ilustrar 
-essa estrutura de dados.
-8. O que é uma lista duplamente encadeada? Apresente um diagrama para ilustrar 
-essa estrutura de dados.
-9. O que é uma lista duplamente encadeada? Apresente um diagrama para ilustrar 
-essa estrutura de dados.
+A principal vantagem das listas encadeadas sobre os vetores em termos de consumo de memória é a utilização eficiente do espaço.
+Vetores: Um vetor requer um bloco contíguo de memória reservado previamente. Mesmo que a quantidade de dados real seja menor, todo o espaço alocado é consumido. Se o espaço reservado for insuficiente, é necessário realocar um bloco maior, o que pode ser custoso.
+
+Listas Encadeadas: As listas só alocam memória para cada elemento  individualmente, no momento exato em que ele é inserido. Isso significa que a lista consome exatamente a memória necessária para armazenar os dados e os ponteiros de ligação. Não há desperdício de espaço reservado não utilizado.
+Exemplo: Se você alocar um vetor para 100 contatos, mas cadastrar apenas 10, a memória de 90 contatos estará reservada, mas vazia. Em uma lista encadeada, apenas a memória para os 10 contatos e seus nós de ligação seria alocada, economizando o espaço que seria desperdiçado no vetor.
+
+7. O que é uma lista simplesmente encadeada? Apresente um diagrama para ilustrar essa estrutura de dados.
+Uma lista simplesmente encadeada é uma coleção linear de elementos chamados nós, onde cada nó é composto por dois campos:
+O campo de dados. Um ponteiro que aponta para o próximo nó da sequência.
+O último nó da lista aponta para um valor nulo (NULL) para indicar o fim da lista. O acesso aos elementos é sequencial, começando pelo nó inicial.
+
+Diagrama: 
+HEAD → [ DADO | PRÓX ] → [ DADO | PRÓX ] → [ DADO | NULL ]
+
+8. O que é uma lista duplamente encadeada? Apresente um diagrama para ilustrar essa estrutura de dados.
+Uma lista duplamente encadeada é uma coleção linear de nós, onde cada nó é composto por três campos:
+O campo de dados. Um ponteiro para o próximo nó da sequência.
+Um ponteiro para o nó anterior da sequência. Essa estrutura permite a navegação em ambas as direções (para frente e para trás). O ponteiro "anterior" do primeiro nó e o ponteiro "próximo" do último nó geralmente apontam para NULL.
+
+diagrama:
+NULL ← [ ANT | DADO | PRÓX ] ⇄ [ ANT | DADO | PRÓX ] ⇄ [ ANT | DADO | PRÓX ] → NULL
+
+9. O que é uma lista duplamente encadeada? Apresente um diagrama para ilustrar essa estrutura de dados.
+Como na duplamente encadeada, mas o último nó aponta de volta para o primeiro, e o primeiro tem o ANT apontando para o último.
+diagrama:
+↖───────────────────────────────────────────────↘
+[ ANT | DADO | PRÓX ] ⇄ [ ANT | DADO | PRÓX ] ⇄ [ ANT | DADO | PRÓX ]
+↙───────────────────────────────────────────────↗
+
 10. Explique o funcionamento do algoritmo de busca binária e sequencial.
-11. Explique o funcionamento dos seguintes algoritmos de ordenação: Insertion sort, 
-Selection sort, Merge sort, Count sort, Quicksort.
+Busca Sequencial (ou Linear): 
+Funcionamento: É o método de busca mais simples. Ele percorre a estrutura de dados elemento por elemento, do início ao fim, comparando cada elemento com o valor procurado.
+Pré-requisito: Não exige que a estrutura de dados esteja ordenada.
+Desempenho (Pior Caso): O(n), onde n é o número de elementos. No pior caso, o elemento procurado é o último, ou não está na lista, exigindo n comparações.
+
+Busca Binária:
+Funcionamento: Divide o problema em metades sucessivas. Ele compara o valor procurado com o elemento do meio da estrutura.
+Se forem iguais, o elemento foi encontrado.
+Se o valor for menor, a busca continua apenas na metade esquerda da estrutura.
+Se o valor for maior, a busca continua apenas na metade direita da estrutura.
+Pré-requisito: A estrutura de dados deve estar obrigatoriamente ordenada.
+Desempenho (Pior Caso): O(\log n). É muito mais rápido que a busca sequencial para grandes volumes de dados, pois descarta metade dos elementos a cada comparação.
+
+11. Explique o funcionamento dos seguintes algoritmos de ordenação: Insertion sort, Selection sort, Merge sort, Count sort, Quicksort.
+Insertion Sort (Ordenação por Inserção):
+Funcionamento: O algoritmo constrói a saída final ordenada um item por vez. Ele itera sobre os elementos da lista. A cada iteração, ele pega o elemento atual e o insere na sua posição correta na sublista já ordenada, deslocando os elementos maiores para a direita.
+
+Selection Sort (Ordenação por Seleção):
+Funcionamento: O algoritmo divide a lista em duas partes: a sublista de elementos já ordenados (inicialmente vazia) e a sublista restante não ordenada. A cada passo, ele encontra o menor (ou maior) elemento na sublista não ordenada e o troca com o primeiro elemento da sublista não ordenada, movendo a fronteira da sublista ordenada em uma posição.
+
+Merge Sort (Ordenação por Intercalação):
+Funcionamento: É um algoritmo de divisão e conquista. Ele divide recursivamente a lista em sublistas até que cada sublista contenha apenas um elemento (que é, por definição, ordenado). Em seguida, ele intercala (merge) as sublistas de forma ordenada para produzir a lista final.
+
+Count Sort (Ordenação por Contagem):
+Funcionamento: É um algoritmo de ordenação não-comparativo, adequado apenas para ordenar inteiros dentro de um intervalo específico (limitado). Ele conta o número de ocorrências de cada valor de elemento e armazena essas contagens em um array auxiliar. Em seguida, ele usa o array de contagens para reconstruir a lista de saída com os elementos na ordem correta.
+
+Quicksort (Ordenação Rápida):
+Funcionamento: É um algoritmo de divisão e conquista. Ele escolhe um elemento da lista, chamado pivô. Em seguida, ele particiona o restante dos elementos em duas sublistas: elementos menores que o pivô e elementos maiores que o pivô. Finalmente, ele aplica o processo recursivamente às duas sublistas. É considerado, em média, um dos algoritmos de ordenação mais rápidos.
